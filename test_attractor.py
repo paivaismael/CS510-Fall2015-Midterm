@@ -1,5 +1,6 @@
 from attractor import Attractor
 import random
+import numpy as np
 from nose import with_setup
 import os
 
@@ -32,6 +33,12 @@ class TestRandomValues:
         assert self.a.params[1]==self.p
         assert self.a.params[2]==self.b
         assert self.a.dt==(self.end-self.start)/self.points
+    def test_euler(self):
+        """Test if euler is generating the correct answer"""
+        self.a=Attractor(1.,1.,1.,0.,80.,101)
+        assert self.a.euler(np.array([2,3,4]))[0]==1.
+        assert self.a.euler(np.array([2,3,4]))[1]==-9.
+        assert self.a.euler(np.array([2,3,4]))[2]==2.
     def test_solve(self):
         """Test if solve is printing in the CSV file"""
         os.remove('save_solution.csv')
