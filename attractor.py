@@ -28,30 +28,30 @@ class Attractor(object):
         r3=np.array([r[0]+k3[0]*self.dt,r[1]+k3[1]*self.dt,r[2]+k3[2]*self.dt])
         return self.euler(r3)
     def evolve(self,x0=0.1,y0=0.0,z0=0.0,order=1):
-        x=np.zeros(self.points)
-        y=np.zeros(self.points)
-        z=np.zeros(self.points)
-        t=np.linspace(self.start,self.end,self.points,endpoint=True)
+        x=np.zeros(1+self.points)
+        y=np.zeros(1+self.points)
+        z=np.zeros(1+self.points)
+        t=np.linspace(self.start,self.end,1+self.points,endpoint=True)
         x[0]=x0
         y[0]=y0
         z[0]=z0
         i=1
         if order==1:
-            while i< self.points:
+            while i<= self.points:
                 k1=self.euler(np.array([x[i-1],y[i-1],z[i-1]]))
                 x[i]=x[i-1]+k1[0]*self.dt
                 y[i]=y[i-1]+k1[1]*self.dt
                 z[i]=z[i-1]+k1[2]*self.dt
                 i+=1
         elif order==2:
-            while i< self.points:
+            while i<= self.points:
                 k2=self.rk2(np.array([x[i-1],y[i-1],z[i-1]]))
                 x[i]=x[i-1]+2*k2[0]*self.dt
                 y[i]=y[i-1]+2*k2[1]*self.dt
                 z[i]=z[i-1]+2*k2[2]*self.dt
                 i+=1
         elif order==4:
-            while i< self.points:
+            while i<= self.points:
                 k4=self.rk4(np.array([x[i-1],y[i-1],z[i-1]]))
                 x[i]=x[i-1]+k4[0]*self.dt
                 y[i]=y[i-1]+k4[1]*self.dt
