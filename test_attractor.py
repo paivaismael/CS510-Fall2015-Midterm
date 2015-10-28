@@ -33,12 +33,19 @@ class TestRandomValues:
         assert self.a.params[1]==self.p
         assert self.a.params[2]==self.b
         assert self.a.dt==(self.end-self.start)/self.points
-    def test_euler(self):
-        """Test if euler is generating the correct answer"""
-        self.a=Attractor(1.,1.,1.,0.,80.,101)
-        assert self.a.euler(np.array([2,3,4]))[0]==1.
-        assert self.a.euler(np.array([2,3,4]))[1]==-9.
-        assert self.a.euler(np.array([2,3,4]))[2]==2.
+    def test_ks(self):
+        """Test if the methods euler, rk2 and rk4 are generating the correct answer"""
+        self.a=Attractor(1.,1.,1.,0.,80.,100)
+        c=np.array([2,3,4])
+        assert self.a.euler(c)[0]==1.
+        assert self.a.euler(c)[1]==-9.
+        assert self.a.euler(c)[2]==2.
+        assert self.a.rk2(c)[0]==-3.
+        assert self.a.rk2(c)[1]==-8.52
+        assert self.a.rk2(c)[2]==-6.24
+        assert self.a.rk4(c)[0]==1.97024
+        assert int(self.a.rk4(c)[1])==-4
+        assert int(self.a.rk4(c)[2])==0
     def test_solve(self):
         """Test if solve is printing in the CSV file"""
         os.remove('save_solution.csv')
